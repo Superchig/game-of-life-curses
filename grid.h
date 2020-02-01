@@ -2,7 +2,7 @@
 
 #include <curses.h>
 
-constexpr int WIDTH = 25;
+constexpr int WIDTH = 50;
 constexpr int HEIGHT = 25;
 
 int calcLivingNbrs(char grid[][WIDTH], int y, int x);

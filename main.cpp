@@ -43,10 +43,20 @@ int main(int argc, char **argv)
         ++x;
       }
       break;
+    case 'L':
+      if (x < WIDTH - 10) {
+        x += 10;
+      }
+      break;
     case 'h':
     case KEY_LEFT:
       if (x > 0) {
         --x;
+      }
+      break;
+    case 'H':
+      if (x >= 10) {
+        x -= 10;
       }
       break;
     case 'j':
@@ -55,10 +65,20 @@ int main(int argc, char **argv)
         ++y;
       }
       break;
+    case 'J':
+      if (y < HEIGHT - 10) {
+        y += 10;
+      }
+      break;
     case 'k':
     case KEY_UP:
       if (y > 0) {
         --y;
+      }
+      break;
+    case 'K':
+      if (y >= 10) {
+        y -= 10;
       }
       break;
 
