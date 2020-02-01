@@ -86,13 +86,12 @@ void toggle(char grid[][WIDTH], int y, int x)
   grid[y][x] = (grid[y][x] == '#') ? ' ' : '#';
 }
 
-void draw(WINDOW *win, char grid[][WIDTH])
+void wdraw(WINDOW *win, char grid[][WIDTH])
 {
   werase(win);
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
-      waddch(win, grid[i][j]);
+      mvwaddch(win, i, j, grid[i][j]);
     }
-    waddch(win, '\n');
   }
 }

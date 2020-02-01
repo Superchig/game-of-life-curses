@@ -8,6 +8,10 @@ int main(int argc, char **argv)
   noecho();
   keypad(stdscr, true);
 
+  WINDOW *lifeOuter = newwin(HEIGHT + 2, WIDTH + 2, 0, 0);
+  box(lifeOuter, 0, 0);
+  WINDOW *lifeInner = derwin(lifeOuter, HEIGHT, WIDTH, 1, 1);
+
   char grid[HEIGHT][WIDTH];
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
@@ -21,8 +25,11 @@ int main(int argc, char **argv)
   int x = 0;
   int y = 0;
 
-  draw(stdscr, grid);
-  move(y, x);
+  wdraw(lifeInner, grid);
+  wmove(lifeInner, y, x);
+  refresh();
+  wrefresh(lifeOuter);
+  wrefresh(lifeInner);
 
   while (int ch = getch()) {
     switch (ch) {
@@ -32,26 +39,26 @@ int main(int argc, char **argv)
 
     case 'l':
     case KEY_RIGHT:
-      if (x < WIDTH) {
-        move(y, ++x);
+      if (x < WIDTH - 1) {
+        ++x;
       }
       break;
     case 'h':
     case KEY_LEFT:
       if (x > 0) {
-        move(y, --x);
+        --x;
       }
       break;
     case 'j':
     case KEY_DOWN:
-      if (y < HEIGHT) {
-        move(++y, x);
+      if (y < HEIGHT - 1) {
+        ++y;
       }
       break;
     case 'k':
     case KEY_UP:
       if (y > 0) {
-        move(--y, x);
+        --y;
       }
       break;
 
@@ -62,12 +69,15 @@ int main(int argc, char **argv)
       advanceState(grid);
     }
 
-    draw(stdscr, grid);
-    move(y, x);
+    wdraw(lifeInner, grid);
+    wmove(lifeInner, y, x);
+    wrefresh(lifeInner);
   }
 
 exit:
   endwin();
+  delwin(lifeInner);
+  delwin(lifeOuter);
 
   return 0;
 }
